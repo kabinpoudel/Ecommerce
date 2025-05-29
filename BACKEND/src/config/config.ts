@@ -10,6 +10,9 @@ interface IEnvConfig {
   email: string;
   password: string;
   otpThreshold: number;
+  adminEmail: string;
+  adminPassword: string;
+  adminUserName: string;
 }
 
 // Helper function to get required env variable (throws error if missing)
@@ -42,5 +45,8 @@ export const envConfig: IEnvConfig = {
   jwtExpiresIn: getRequiredEnv("JWT_EXPIRES_IN"),
   email: getRequiredEnv("EMAIL"),
   password: getRequiredEnv("PASSWORD"),
-  otpThreshold: getNumberEnv("OTP_THRESHOLD", 5), // Default to 5 if not set
+  otpThreshold: getNumberEnv("OTP_THRESHOLD"), // Default to 5 if not set
+  adminEmail: getRequiredEnv("ADMIN_EMAIL"),
+  adminPassword: getRequiredEnv("ADMIN_PASSWORD"),
+  adminUserName: getRequiredEnv("ADMIN_USERNAME"),
 };

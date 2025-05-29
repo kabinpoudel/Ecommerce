@@ -16,6 +16,14 @@ class UserController {
       sendResponse(res, 400, "Please Provide username, email and Password");
       return;
     }
+    const [data] = await User.findAll({
+      where: {
+        email: email,
+      },
+    });
+    if (data) {
+      sendResponse(res, 400, "Please try again Later");
+    }
     await User.create({
       username,
       email,
@@ -128,6 +136,16 @@ class UserController {
     const [user] = await findData(User, "email", email);
     if (!user) {
       sendResponse(res, 404, "No Email with that User");
+      return;
+    }
+    if (!user.otp) {
+      sendResponse(res, 400, "You have already Changed your Password");
+      return;
+    }
+    const otpGenerateTime = user.otpGenerateTime;
+    checkOtpExpiration(res, otpGenerateTime, envConfig.otpThreshold);
+    if (otp != user.otp) {
+      sendResponse(res, 400, "OTP doesn't Match");
       return;
     }
 

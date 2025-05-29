@@ -19,7 +19,7 @@ try {
   console.log("Something Happened", error);
 }
 
-sequelize.sync({ force: false }).then(() => {
+sequelize.sync({ force: false, alter: false }).then(() => {
   console.log("local changes injected to database sucessfully");
 });
 export default sequelize;
