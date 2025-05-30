@@ -3,13 +3,8 @@ import sendResponse from "../services/sendResponse";
 import Product from "../database/models/productModel";
 import Category from "../database/models/categoryModel";
 
-interface IProductRequest extends Request {
-  file?: {
-    filename: string;
-  };
-}
 class ProductController {
-  async createProduct(req: IProductRequest, res: Response): Promise<void> {
+  async createProduct(req: Request, res: Response): Promise<void> {
     console.log(req.body);
     const {
       productName,
@@ -42,7 +37,7 @@ class ProductController {
       productPrice,
       productTotalStock,
       discount: discount || 0,
-      categoryId,
+      categoryId: categoryId,
       productImageUrl: fileName,
     });
     sendResponse(res, 200, "Product Created Sucessfully");
@@ -51,6 +46,7 @@ class ProductController {
     const datas = await Product.findAll({
       include: {
         model: Category,
+        attributes: ["id", "categoryName"],
       },
     });
     sendResponse(res, 200, "Products Fetched Sucessfully", datas);
@@ -63,6 +59,7 @@ class ProductController {
       },
       include: {
         model: Category,
+        attributes: ["id", "categoryName"],
       },
     });
     sendResponse(res, 200, "Product Fetched Sucessfully", data);
@@ -81,7 +78,7 @@ class ProductController {
     });
     sendResponse(res, 200, "Product Deleted Sucessfully");
   }
-  async updateProduct(req: IProductRequest, res: Response): Promise<void> {
+  async updateProduct(req: Request, res: Response): Promise<void> {
     const { id } = req.params;
     const fileName = req.file
       ? req.file.filename
