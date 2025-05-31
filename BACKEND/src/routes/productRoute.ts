@@ -2,7 +2,7 @@ import express, { Router } from "express";
 import ProductController from "../controllers/productController";
 import userMiddleware, { Role } from "../middleware/userMiddleware";
 import { storage, multer } from "../middleware/multerMiddleware";
-
+import errorHandler from "../services/errorHandler";
 const upload = multer({ storage: storage });
 const router: Router = express.Router();
 router
@@ -11,7 +11,7 @@ router
     userMiddleware.isUserLoggedIn,
     userMiddleware.restrictTo(Role.Admin),
     upload.single("productImage"),
-    ProductController.createProduct
+    errorHandler(ProductController.createProduct)
   )
   .get(ProductController.getAllProducts);
 router
@@ -20,12 +20,12 @@ router
   .delete(
     userMiddleware.isUserLoggedIn,
     userMiddleware.restrictTo(Role.Admin),
-    ProductController.deleteProduct
+    errorHandler(ProductController.deleteProduct)
   )
   .patch(
     userMiddleware.isUserLoggedIn,
     userMiddleware.restrictTo(Role.Admin),
-    ProductController.updateProduct
+    errorHandler(ProductController.updateProduct)
   );
 
 export default router;

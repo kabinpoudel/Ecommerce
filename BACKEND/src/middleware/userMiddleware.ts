@@ -19,11 +19,7 @@ interface IExtendedRequest extends Request {
 }
 
 class UserMiddleware {
-  async isUserLoggedIn(
-    req: IExtendedRequest,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> {
+  async isUserLoggedIn(req: IExtendedRequest, res: Response, next: NextFunction): Promise<void> {
     //Receive Token
     const token = req.headers.authorization;
     if (!token) {

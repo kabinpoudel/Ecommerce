@@ -2,6 +2,10 @@ import { HasOne, Sequelize } from "sequelize-typescript";
 import { envConfig } from "../config/config";
 import Product from "./models/productModel";
 import Category from "./models/categoryModel";
+import User from "./models/UserModel";
+import Order from "./models/orderModel";
+import OrderDetail from "./models/orderDetail";
+import Payment from "./models/paymentModel";
 
 const sequelize = new Sequelize(envConfig.dburl as string, {
   models: [__dirname + "/models"],
@@ -28,4 +32,18 @@ sequelize.sync({ force: false, alter: false }).then(() => {
 //relationships
 Product.belongsTo(Category, { foreignKey: "categoryId" });
 Category.hasOne(Product, { foreignKey: "categoryId" });
+
+//User * order
+Order.belongsTo(User, { foreignKey: "userId" });
+User.hasMany(Order, { foreignKey: "userId" });
+
+Payment.belongsTo(Order, { foreignKey: "orderId" });
+Order.hasOne(Payment, { foreignKey: "orderId" });
+
+OrderDetail.belongsTo(Order, { foreignKey: "orderId" });
+Order.hasOne(OrderDetail, { foreignKey: "orderId" });
+
+OrderDetail.belongsTo(Product, { foreignKey: "productId" });
+Product.hasMany(OrderDetail, { foreignKey: "productId" });
+//exports
 export default sequelize;

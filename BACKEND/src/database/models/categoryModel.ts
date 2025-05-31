@@ -1,10 +1,4 @@
-import {
-  Column,
-  DataType,
-  Table,
-  Model,
-  AllowNull,
-} from "sequelize-typescript";
+import { Column, DataType, Table, Model } from "sequelize-typescript";
 
 @Table({
   tableName: "categories",
