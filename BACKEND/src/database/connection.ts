@@ -6,6 +6,7 @@ import User from "./models/UserModel";
 import Order from "./models/orderModel";
 import OrderDetail from "./models/orderDetail";
 import Payment from "./models/paymentModel";
+import Cart from "./models/cartModel";
 
 const sequelize = new Sequelize(envConfig.dburl as string, {
   models: [__dirname + "/models"],
@@ -45,5 +46,12 @@ Order.hasOne(OrderDetail, { foreignKey: "orderId" });
 
 OrderDetail.belongsTo(Product, { foreignKey: "productId" });
 Product.hasMany(OrderDetail, { foreignKey: "productId" });
+
+Cart.belongsTo(User, { foreignKey: "userId" });
+User.hasOne(Cart, { foreignKey: "userId" });
+
+Cart.belongsTo(Product, { foreignKey: "productId" });
+Product.hasMany(Cart, { foreignKey: "productId" });
+
 //exports
 export default sequelize;
