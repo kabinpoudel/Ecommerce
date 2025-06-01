@@ -14,11 +14,7 @@ class Payment extends Model {
   })
   declare id: string;
   @Column({
-    type: DataType.ENUM(
-      PaymentMethod.COD,
-      PaymentMethod.Esewa,
-      PaymentMethod.Khalti
-    ),
+    type: DataType.ENUM(PaymentMethod.COD, PaymentMethod.Esewa, PaymentMethod.Khalti),
     defaultValue: PaymentMethod.COD,
   })
   declare paymentMethod: string;
@@ -27,5 +23,9 @@ class Payment extends Model {
     defaultValue: PaymentStatus.Unpaid,
   })
   declare paymentStatus: string;
+  @Column({
+    type: DataType.STRING,
+  })
+  declare pidx: string;
 }
 export default Payment;

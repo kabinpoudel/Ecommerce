@@ -13,6 +13,7 @@ interface IEnvConfig {
   adminEmail: string;
   adminPassword: string;
   adminUserName: string;
+  khaltikey: string;
 }
 
 // Helper function to get required env variable (throws error if missing)
@@ -49,4 +50,5 @@ export const envConfig: IEnvConfig = {
   adminEmail: getRequiredEnv("ADMIN_EMAIL"),
   adminPassword: getRequiredEnv("ADMIN_PASSWORD"),
   adminUserName: getRequiredEnv("ADMIN_USERNAME"),
+  khaltikey: getRequiredEnv("KHALTI_SECRET_KEY"),
 };
