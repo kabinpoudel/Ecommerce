@@ -48,7 +48,7 @@ class UserMiddleware {
       let userRole = req.user?.role as Role;
 
       if (!roles.includes(userRole)) {
-        sendResponse(res, 404, "User Cannot add Category");
+        sendResponse(res, 404, "Your role is not fit for this job");
         return;
       }
       next();

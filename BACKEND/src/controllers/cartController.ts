@@ -52,7 +52,7 @@ class CartController {
     if (cartItems.length === 0) {
       sendResponse(res, 404, "No items in the cart");
     } else {
-      sendResponse(res, 200, "Cart Items Fetched Sucessfully");
+      sendResponse(res, 200, "Cart Items Fetched Sucessfully", cartItems);
     }
   }
   async deleteMyCartItems(req: AuthRequest, res: Response) {
@@ -90,7 +90,7 @@ class CartController {
     } else {
       cartItem.quantity = quantity;
       await cartItem.save();
-      sendResponse(res, 200, "Cart Updated");
+      sendResponse(res, 200, "Cart Updated", cartItem);
     }
   }
 }
