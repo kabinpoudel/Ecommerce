@@ -46,10 +46,20 @@ function startServer() {
         }
       });
     }
-    socket.on("updateOrderStatus", (data) => {
+    socket.on("updateOrderStatus", async (data) => {
       const { status, orderId, userId } = data;
       const findUser = onlineUsers.find((user) => user.userId == userId);
       if (findUser) {
+        await Order.update(
+          {
+            orderStatus: status,
+          },
+          {
+            where: {
+              id: orderId,
+            },
+          }
+        );
         io.to(findUser.socketId).emit("success", "Order Status Updated");
       } else {
         socket.emit("err", "User is not Online");

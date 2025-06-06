@@ -29,14 +29,47 @@ class Order extends Model {
     type: DataType.STRING,
     allowNull: false,
   })
-  declare shippingAddress: string;
+  declare addressLine: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  declare city: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  declare state: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  declare zipCode: string;
 
   @Column({
     type: DataType.FLOAT,
     allowNull: false,
   })
-  declare totalAmount: number;
+  declare totalAmount: Number;
 
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  declare firstName: string;
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  declare lastName: string;
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  declare email: string;
   @Column({
     type: DataType.ENUM(
       OrderStatus.Cancelled,

@@ -1,5 +1,6 @@
 //All imports from dependencies
 import express from "express";
+import cors from "cors";
 
 //All imports from file
 import "./database/connection";
@@ -10,10 +11,13 @@ import orderRoute from "./routes/orderRoute";
 import cartRoute from "./routes/cartRoute";
 
 const app = express();
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 app.use(express.json());
-app.get("/hello", (req, res) => {
-  res.json({ message: "Hello" });
-});
+app.use(express.static("./src/uploads"));
 
 app.use("/api/auth", userRoute);
 app.use("/api/category", categoryRoute);

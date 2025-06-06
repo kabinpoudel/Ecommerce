@@ -11,7 +11,11 @@ interface AuthRequest extends Request {
 class CartController {
   async addToCart(req: AuthRequest, res: Response) {
     const userId = req.user?.id;
-    const { productId, quantity } = req.body;
+    interface IData {
+      productId: string;
+      quantity: number;
+    }
+    const { productId, quantity }: IData = req.body;
     if (!productId || !quantity) {
       sendResponse(res, 400, "Please Provide quantity , ProudctId");
       return;
@@ -24,7 +28,7 @@ class CartController {
       },
     });
     if (cartOfUser) {
-      cartOfUser.quantity += quantity;
+      cartOfUser.quantity = cartOfUser.quantity + quantity;
       await cartOfUser.save();
     } else {
       await Cart.create({
@@ -33,7 +37,17 @@ class CartController {
         quantity,
       });
     }
-    sendResponse(res, 200, "Product Added to Cart");
+    const cartData = await Cart.findAll({
+      where: {
+        userId,
+      },
+      include: [
+        {
+          model: Product,
+        },
+      ],
+    });
+    sendResponse(res, 200, "Product Added to Cart", cartData);
   }
 
   async getMyCartItem(req: AuthRequest, res: Response) {

@@ -16,6 +16,6 @@ class Cart extends Model {
     type: DataType.INTEGER,
     allowNull: false,
   })
-  declare quantity: Number;
+  declare quantity: number;
 }
 export default Cart;
